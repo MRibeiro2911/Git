@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  </head>
+  <header>
+    <div>
+      <h1 class="text-center text-primary" id="titulo">
+        Dashboard FORD
+    </h1>
+    </div>
+  </header>
+
+  <div class="col " >
+    <div class="card-deck text-center d-inline-flex"  >
+      <div class="col-sm-0" id="carSelect">
+        <div class="card border-dark d-inline-flex col bd-highlight" id="carSelect" >
+            <div >
+              <h5 class="card-header text-center ">Veiculo</h5>
+            </div>
+            <div class="card-body text-center" id="seletor" >
+              <select class="mx-auto"
+              [(ngModel)]="idcarroselecionado"  (ngModelChange)="aoSelecionar()">
+                <option *ngFor="let carrosdashboard of carsdashboard; index as i"
+                [ngValue]="carrosdashboard.id">
+                <div class="card border-primary text-center">
+                  <div class="card-footer">
+                    <ul>
+                      <li>{{carrosdashboard.vehicle}}</li>
+                    </ul>
+                  </div>
+                </div>
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+
+      <div class="card-deck" id="cards">
+          <div class="mx-auto text-primary " *ngIf="!idcarroselecionado" id="condicional">
+            <h3 class="d-inline-flex">
+              Selecionar veiculo
+            </h3>
+      </div>
+      <div *ngFor="let carrosdashboard of carsdashboard; index as i">
+        <div  *ngIf="idcarroselecionado===carsdashboard[i].id"  >
+          <div class="d-inline-flex col-sm-4 bd-highlight"  id="unidade" >
+            <div class="card border-dark mb-3" style="width: 15rem;">
+              <h5 class="card-header">Total de Vendas</h5>
+              <h3 class="card-body font-weight-bold text-primary " >{{carsdashboard[i].volumetotal}}</h3>
+              <div class="card-footer">
+                <p>Unid.</p>
+              </div>
+            </div>
+          </div>
+          <div class="d-inline-flex col-sm-4 bd-highlight"  id="unidade">
+            <div class="card border-dark mb-3" style="width: 15rem;" >
+              <h5 class="card-header">Conectados</h5>
+                <h3 class="card-body text-center font-weight-bold text-primary">{{carsdashboard[i].connected}}</h3>
+                <div class="card-footer">
+                  <p>Unid.</p>
+                </div>
+            </div>
+          </div>
+          <div class="d-inline-flex col-sm-4  bd-highlight" id="unidade" >
+            <div class="card border-dark mb-3" style="width: 15rem;" >
+                <h5 class="card-header">Software Updates</h5>
+                <h3 class="card-body text-center font-weight-bold text-primary">{{carsdashboard[i].softwareUpdates}}</h3>
+                <div class="card-footer">
+                  <p>Unid.</p>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+        <div class="mx-auto"  >
+          <div  class="mx-auto" *ngIf="aoSelecionar()===1">
+            <img src="assets/img/ranger.png"  class="img-fluid" alt="Ford Ranger">
+          </div>
+          <div  class="text-center" *ngIf="aoSelecionar()===2">
+            <img src="assets/img/mustang.png" class="img-fluid" alt="Ford Mustang">
+          </div>
+          <div class="text-center" *ngIf="aoSelecionar()===3">
+            <img src="assets/img/territory.png" class="img-fluid" alt="Ford Territory">
+          </div>
+          <div class="text-center" *ngIf="aoSelecionar()===4">
+            <img src="assets/img/broncoSport.png" class="img-fluid" alt="Bronco Sport">
+          </div>
+        </div>
+  </div>
+  <footer class="d-inline-flex" id="tabeladashboard">
+
+      <div class="table-responsive text-center" id="seletorVIN" >
+        <table class="table " >
+          <thead class="bg-primary text-center" >
+            <th>Codigo VIN</th>
+          </thead>
+          <tbody scope="row ">
+            <tr>
+              <th>
+                <input type="text" class="d-inline-flex table-responsive text-center"
+                [(ngModel)]="campoBusca" >
+              </th>
+            </tr>
+          </tbody>
+
+        </table>
+      </div>
+
+      <div class="table-responsive text-center " >
+        <table class="table ">
+          <div *ngIf="!campoBusca else retornobusca">
+            <thead class="bg-primary">
+              <th scope="col">Odometro</th>
+              <th scope="col">Pressão dos Pneus</th>
+              <th scope="col">Status</th>
+              <th scope="col">Status da Bateria</th>
+              <th scope="col">Nivel de combustivel</th>
+              <th scope="col">Latitude</th>
+              <th scope="col">Longitude</th>
+            </thead>
+          </div>
+              <ng-template #retornobusca>
+
+                <div *ngFor="let data of vehicleData; index as i" >
+                  <div *ngIf="campoBusca===vehicleData[i].vin" >
+                          <thead class="bg-primary" id="cabecalhotabela" >
+                            <th scope="col">Odometro</th>
+                            <th scope="col">Pressão dos Pneus</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Status da Bateria</th>
+                            <th scope="col">Nivel de combustivel</th>
+                            <th scope="col">Latitude</th>
+                            <th scope="col">Longitude</th>
+                          </thead>
+                          <tbody>
+                            <tr scope="row ">
+                              <td>{{vehicleData[i].odometer}}</td>
+                              <td>{{vehicleData[i].tirePressure}}</td>
+                              <td>{{vehicleData[i].status}}</td>
+                              <td>{{vehicleData[i].batteryStatus}}</td>
+                              <td>{{vehicleData[i].fuelLevel}}</td>
+                              <td>{{vehicleData[i].lat}}</td>
+                              <td>{{vehicleData[i].long}}</td>
+                            </tr>
+                          </tbody>
+                    </div>
+                  </div>
+                </ng-template>
+            </table>
+          </div>
+  </footer>
+
+
+

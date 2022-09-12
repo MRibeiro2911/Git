@@ -1,0 +1,43 @@
+<header class="sticky-top">
+  <nav class="navbar mavbar-light bg-white">
+    <a class="navbar-brand">
+      <i class="fa fa-bars mr-2"
+      (click)="menu.abreMenu()"
+      (keyup.space)="menu.abreMenu"
+      ></i>
+    </a>
+
+    <app-menu #menu>
+
+      <div class="col-md-2 mb-2" id="logo" >
+        <img class="img-fluid d-none d-sm-flex align-middle" id = "logo" src="assets/img/ford.png"
+            alt="Logo Ford">
+
+      </div>
+      <ul class="list-unstyled">
+        <li>
+          <a [routerLink]="['/carros']">Home</a>
+        </li>
+        <li>
+          <a [routerLink]="['/dashboard']">Dashboard
+          </a>
+        </li>
+      </ul>
+    </app-menu>
+
+    <div *ngIf="user$ | async as user">
+      <div *ngIf="user.name; else login">
+        <i class="fa fa-user-circule mr-1"></i>
+        <a class="mr-1">{{user.name}}</a>
+        <a (click)="logout()">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <ng-template #login>
+    <span class="navbar-text">
+      <a [routerLink]="['']">Login</a>
+    </span>
+  </ng-template>
+
+</header>
